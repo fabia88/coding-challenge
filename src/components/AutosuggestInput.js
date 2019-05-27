@@ -2,41 +2,42 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { fetchData } from '../helpers/general.utils';
 
-function getSuggestionValue(suggestion) {
+export const getSuggestionValue = suggestion => {
   return suggestion.name;
 }
 
-function renderSuggestion(suggestion) {
+export const renderSuggestion = suggestion => {
   let label = '';
   if (suggestion._type === 'autocomplete_value') {
-    label = suggestion.value.artist_group || suggestion.value.occasion
+    label = suggestion.value.occasion || "Artist/group"
   } else {
     label = suggestion._type
   }
   return (
     <div class='suggestions'>
-      <p><strong>{suggestion.name}</strong></p>
-      <p>{label}</p>
+      <h3><strong>{suggestion.name}</strong></h3>
+      <p>Category: {label}</p>
     </div>
   );
 }
 
-class AutosuggestInput extends Component {
-  constructor() {
-    super();
+export class AutosuggestInput extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       value: '',
       suggestions: []
     };
   }
 
-  onChange = (event, { newValue, method }) => {
+  onChange = (event, { newValue }) => {
     this.setState({
       value: newValue
     });
   };
 
   onSuggestionsFetchRequested = async ({ value }) => {
+    console.log(value)
     let suggestions = []
     try {
       suggestions = await fetchData(value)
@@ -44,7 +45,7 @@ class AutosuggestInput extends Component {
       console.log(e)
     }
     this.setState({
-      suggestions: suggestions
+      suggestions
     });
   };
 
@@ -75,5 +76,3 @@ class AutosuggestInput extends Component {
     );
   }
 }
-
-export default AutosuggestInput;
