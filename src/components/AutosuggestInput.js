@@ -37,8 +37,14 @@ class AutosuggestInput extends Component {
   };
 
   onSuggestionsFetchRequested = async ({ value }) => {
+    let suggestions = []
+    try {
+      suggestions = await fetchData(value)
+    } catch(e) {
+      console.log(e)
+    }
     this.setState({
-      suggestions: await fetchData(value)
+      suggestions: suggestions
     });
   };
 
