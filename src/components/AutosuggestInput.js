@@ -37,7 +37,6 @@ export class AutosuggestInput extends Component {
   };
 
   onSuggestionsFetchRequested = async ({ value }) => {
-    console.log(value)
     let suggestions = []
     try {
       suggestions = await fetchData(value)
@@ -64,6 +63,9 @@ export class AutosuggestInput extends Component {
 
     return (
       <div id='autosuggest'>
+        <div id='title'><h1>
+          What are you looking for?
+        </h1></div>
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
